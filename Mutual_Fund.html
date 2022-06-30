@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+     function check(form){
+        var scheme=form.sno.value;
+        // document.getElementById('msg').innerHTML=scheme;
+
+        async function livedata(){
+            let url='https://api.mfapi.in/mf';
+            let myobj1=await(await fetch(url)).json();
+            var found=0;
+            // document.write(myobj1[0]["schemeName"]);
+            for (var i=0;i<myobj1.length;i++){
+                if(scheme==myobj1[i]["schemeCode"]){
+                    document.getElementById('msg').innerHTML=myobj1[i]["schemeName"];
+                    found=1;
+                    break;
+                }
+                else{
+
+                }
+                if(found==0){
+                    document.getElementById('msg').innerHTML="Scheme Not Found"
+                }
+            }
+        }
+        livedata();
+     }
+    </script>
+</head>
+<body>
+    <form action="">
+        Enter Scheme Name:<input type="text" name="sno"><br/>
+        <input type="submit" value="show fund" onclick="check(this.form); return false;">
+    </form>
+    <p id="msg"></p>
+    
+</body>
+</html>

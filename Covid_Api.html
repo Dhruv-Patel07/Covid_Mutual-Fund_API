@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid_API</title>
+    <script>
+     function check(form){
+        var date=form.sno.value;
+        async function livedata(){
+            let url='https://data.covid19india.org/data.json';
+            let myobj1=await(await fetch(url)).json();
+            var flag=0
+            for (var i=0;i<myobj1["cases_time_series"].length;i++){
+                if(date==myobj1["cases_time_series"][i]["date"]){
+                    document.getElementById('msg').innerHTML=
+                        `<table border='1'><tr><td>NEW CASES</td><td>${myobj1["cases_time_series"][i]["dailyconfirmed"]}</td></tr><tr><td>NEW DEATHS</td><td>${myobj1["cases_time_series"][i]["dailydeceased"]}</td></tr></table>`;
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag==0){
+                document.write("Data Not Found")
+            }
+        }
+        livedata();
+     }
+    </script>
+</head>
+<body>
+    <form action="">
+        Date : <input type="text" name="sno"> 
+        <input type="submit" value="Submit" onclick="check(this.form); return false;">
+    </form>
+    <p id="msg"></p>
+    
+</body>
+</html>
